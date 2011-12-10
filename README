@@ -1,0 +1,9 @@
+This is Yoda : The Yorick Deconvolution Algorithm
+need to install the OptimPack library from eric thiebaut :
+http://www-obs.univ-lyon1.fr/labo/perso/eric.thiebaut/optimpack.html
+to run this software
+a version of this library is distributed with Yoda
+to install the local version go to trunk/OptimPack-1.3.2 directory
+yorick -batch make.i
+make clean all install
+for exemples of Yoda use check the content of check_yoda.i
