@@ -1,19 +1,36 @@
 /*
- *-----------------------------------------------------------------------------
- *
- * Object power spectral density estimation using a maximum likelihood approach
- * Based on routines originally written by Laurent Mugnier
- *
- * References :
- * J.M. Conan, L.M. Mugnier, T. Fusco, V. Michau & G. Rousset (1998) : "Myopic
- * deconvolution of adaptie optics images by use of object and point spread
- * function power spectra" Appl. Opt., vol 37, p. 4614
- *
- * A. Blanc, J. Idier,& L.M. Mugnier (2000) : "Novel estimator for the aberrations
- * of a space telescope by phase diversity", Proc. SPIE 4013, 728-736
- *
- *-----------------------------------------------------------------------------
- */
+  Yoda: YOrick Deconvolution Algorithm based on penalized maximum likelihood
+  Copyright (C) <2011>  <Damien Gratadour>
+  
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+  Object power spectral density estimation using a maximum likelihood approach
+  Based on routines originally written by Laurent Mugnier
+  
+  References:
+  J.M. Conan, L.M. Mugnier, T. Fusco, V. Michau & G. Rousset (1998) : "Myopic
+  deconvolution of adaptie optics images by use of object and point spread
+  function power spectra" Appl. Opt., vol 37, p. 4614
+ 
+  A. Blanc, J. Idier,& L.M. Mugnier (2000) : "Novel estimator for the aberrations
+  of a space telescope by phase diversity", Proc. SPIE 4013, 728-736
+
+  For use with deconvolution:
+  D. Gratadour, D. Rouan, L.M. Mugnier, T. Fusco, Y. Clénet, E. Gendron & F. Lacombe
+  (2006): "Near-infrared adaptive optics dissection of the core of NGC 1068 with
+  NAOS-CONICA". A&A, vol 446, p. 813
+*/
 
 struct psd_struct
 {
@@ -166,7 +183,7 @@ func psd_error(param,&gradient,extra)
 
 
 func yoda_psdobj(image,psf,&varnoise,&psd_noise,&psd_obj,mobj=,nozero=,disp=,
-                 object=,nbiter=,threshold=,verbose=,noise_psf=)
+                 object=,nbiter=,threshold=,verbose=,noise_psf=,nmask=)
 /* DOCUMENT yoda_psdobj(image,psf,&varnoise,&psd_noise,&psd_obj,mobj=,nozero=,disp=,
  *                      object=,nbiter=,threshold=,verbose=,noise_psf=)
  *  
@@ -229,7 +246,10 @@ func yoda_psdobj(image,psf,&varnoise,&psd_noise,&psd_obj,mobj=,nozero=,disp=,
   tfh2 = tfh2 / max(tfh2);
   tfi2 = abs((fft(image,1)) - tfh * tf_mobj)^2;
   tfi2 = tfi2 / max(tfi2) * sum(image)^2;
-
+  if (nmask != []) {
+    mask = roll(dist(dimsof(tfi2)(2))<nmask);
+    tfi2(where(mask == 0)) = min(tfi2(where(mask)));
+  }
   tfi2_avg = circavg(tfi2);
   tfh2_avg = circavg(tfh2);
   

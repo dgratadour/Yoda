@@ -1,22 +1,31 @@
 /*
- *-----------------------------------------------------------------------------
- *
- * Yoda is the YOrick Deconvolution Algorithm based on a penalized
- * maximum likelihood approach
- *
- * Reference :
- * L.M. Mugnier, T. Fusco & J.M. Conan (2004) : "MISTRAL: a myopic
- * edge-preserving image restoration method, with application to astronomical
- * adaptive-optics-corrected long-exposure images" OSAA, vol 21, p. 1841
- *
- *-----------------------------------------------------------------------------
+    Yoda: YOrick Deconvolution Algorithm based on penalized maximum likelihood
+    Copyright (C) <2011>  <Damien Gratadour>
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+    Reference :
+    L.M. Mugnier, T. Fusco & J.M. Conan (2004) : "MISTRAL: a myopic
+    edge-preserving image restoration method, with application to astronomical
+    adaptive-optics-corrected long-exposure images" OSAA, vol 21, p. 1841
  */
 
 require,"imutil.i";
-require,"yoda_utils.i";
-require,"psd_fit.i";
-require,"OptimPack-1.3.2/yorick/OptimPack1.i";
-require,"OptimPack-1.3.2/yorick/lbfgs.i";
+require,"/home/brujo/yorick/Yoda/trunk/yoda_utils.i";
+require,"/home/brujo/yorick/Yoda/trunk/psd_fit.i";
+require,"/home/brujo/yorick/Yoda/trunk/OptimPack-1.3.2/yorick/OptimPack1.i";
+require,"/home/brujo/yorick/Yoda/trunk/OptimPack-1.3.2/yorick/lbfgs.i";
 
 struct yoda_struct
 {
